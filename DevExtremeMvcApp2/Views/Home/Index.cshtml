@@ -1,0 +1,29 @@
+@using DevExtremeMvcApp2.Models
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Home</h2>
+
+<a href="~/Report.aspx?page=page1" target="_blank">View Report:廖先生</a>
+<br />
+<a href="~/Report.aspx?page=page2" target="_blank">View Report:台中市</a>
+
+
+@(Html.DevExtreme().DataGrid<Person>()
+                        .ShowBorders(true)
+                        .DataSource(d => d.WebApi().Controller("Persons").Key("PersonID"))
+                        .Columns(columns =>
+                        {
+                            columns.AddFor(m => m.PersonID);
+                            columns.AddFor(m => m.PersonName);
+                            columns.AddFor(m => m.PersonAddress);
+                        })
+                        .Paging(p => p.PageSize(10))
+                        .FilterRow(f => f.Visible(true))
+                        .HeaderFilter(f => f.Visible(true))
+                        .GroupPanel(p => p.Visible(true))
+                        .Grouping(g => g.AutoExpandAll(false))
+                        .RemoteOperations(true)
+)
